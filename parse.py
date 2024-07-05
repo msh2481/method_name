@@ -31,26 +31,26 @@ def parse_method(file_content, method_name):
     return "\n".join(method_body)
 
 
-# Example usage
-file_content = """
-class Kek:
-    def some_function():
+if __name__ == "__main__":
+    file_content = """
+    class Kek:
+        def some_function():
+            pass
+
+        def METHOD_NAME():
+            print("This is the method body")
+            for i in range(5):
+                print(f"Line {i}")
+            
+            if True:
+                print("Nested block")
+
+    class Lol:
         pass
 
-    def METHOD_NAME():
-        print("This is the method body")
-        for i in range(5):
-            print(f"Line {i}")
-        
-        if True:
-            print("Nested block")
+    def another_function():
+        pass
+    """
 
-class Lol:
-    pass
-
-def another_function():
-    pass
-"""
-
-result = parse_method(file_content, "METHOD_NAME")
-print(result)
+    result = parse_method(file_content, "METHOD_NAME")
+    print(result)
