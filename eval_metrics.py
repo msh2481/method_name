@@ -49,18 +49,18 @@ def calc_metrics(predicted_list, correct_list):
 
     for predicted, correct in zip(predicted_list, correct_list):
         metrics = calc_metrics_on_single(predicted, correct)
-        total_precision += metrics['precision']
-        total_recall += metrics['recall']
-        total_f1_score += metrics['f1_score']
+        total_precision += metrics["precision"]
+        total_recall += metrics["recall"]
+        total_f1_score += metrics["f1_score"]
 
     avg_precision = total_precision / n
     avg_recall = total_recall / n
     avg_f1_score = total_f1_score / n
 
     return {
-        'avg_precision': avg_precision,
-        'avg_recall': avg_recall,
-        'avg_f1_score': avg_f1_score
+        "avg_precision": avg_precision,
+        "avg_recall": avg_recall,
+        "avg_f1_score": avg_f1_score,
     }
 
 
