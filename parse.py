@@ -1,4 +1,9 @@
 def parse_method(file_content, method_name):
+
+    '''
+    Parses the target function
+    '''
+
     lines = file_content.split("\n")
     non_empty_lines = [line for line in lines if line.strip()]
 
