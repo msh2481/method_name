@@ -23,11 +23,14 @@ def parse_method(file_content, method_name="METHOD_NAME"):
 
     method_body = []
     method_indent = indented_lines[method_start][0]
+    arguments_ended = False
 
     for indent, line in indented_lines[method_start:]:
-        if indent > method_indent or line == indented_lines[method_start][1]:
+        if indent > method_indent or not arguments_ended:
             stripped_line = line[method_indent * 4 :]
             method_body.append(stripped_line)
+            if ")" in line:
+                arguments_ended = True
         else:
             break
 
@@ -36,39 +39,25 @@ def parse_method(file_content, method_name="METHOD_NAME"):
 
 if __name__ == "__main__":
     file_content = """
-#  python-holidays
-#  ---------------
-#  A fast, efficient Python library for generating country, province and state
-#  specific sets of holidays on the fly. It aims to make determining whether a
-#  specific date is a holiday as fast and flexible as possible.
-
-from holidays.countries.dominican_republic import DominicanRepublic, DO, DOM
-from tests.common import TestCase
-
-
-class TestDominicanRepublic(TestCase):
-    @classmethod
-    def METHOD_NAME(cls):
-        super().METHOD_NAME(DominicanRepublic)
-
-    def test_country_aliases(self):
-        self.assertCountryAliases(DominicanRepublic, DO, DOM)
-
-    def test_2020(self):
-        self.assertHolidays(
-            ("2020-01-01", "Año Nuevo"),
-            ("2020-01-06", "Día de los Santos Reyes"),
-            ("2020-01-21", "Día de la Altagracia"),
-            ("2020-01-26", "Día de Duarte"),
-            ("2020-02-27", "Día de Independencia"),
-            ("2020-04-10", "Viernes Santo"),
-            ("2020-05-04", "Día del Trabajo"),
-            ("2020-06-11", "Corpus Christi"),
-            ("2020-08-16", "Día de la Restauración"),
-            ("2020-09-24", "Día de las Mercedes"),
-            ("2020-11-09", "Día de la Constitución"),
-            ("2020-12-25", "Día de Navidad"),
-        )
+def METHOD_NAME(
+    img: np.ndarray,
+    bgr2rgb=True,
+    data_range=1.0,  # pylint: disable=unused-argument
+    normalize=False,
+    change_range=True,
+    add_batch=True,
+) -> np.ndarray:
+    "Converts a numpy image array into a numpy Tensor array.
+    Parameters:
+        img (numpy array): the input image numpy array
+        add_batch (bool): choose if new tensor needs batch dimension added
+    "
+    # check how many channels the image has, then condition. ie. RGB, RGBA, Gray
+    # if bgr2rgb:
+    #     img = img[
+    #         :, :, [2, 1, 0]
+    #     ]  # BGR to RGB -> in numpy, if using OpenCV, else not needed. Only if image has colors.
+    if change_range:
 """.strip()
     result = parse_method(file_content, "METHOD_NAME")
     print(result)
