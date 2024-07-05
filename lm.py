@@ -150,4 +150,4 @@ def make_submission(input_name: str, output_name: str):
         print(json.dumps(results, indent=4))
 
 
-make_submission("data/small_train.csv", "submission.csv")
+make_submission("data/test_methods.csv", "submission.csv")
