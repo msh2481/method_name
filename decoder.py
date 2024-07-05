@@ -29,12 +29,13 @@ def solve(method_text: str) -> list[str]:
         return []
 
 
-model_name = "deepseek-ai/deepseek-coder-1.3b-instruct"
+model_name = "Qwen/Qwen2-1.5B-Instruct"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(
-    model_name, trust_remote_code=True, torch_dtype=t.bfloat16
+    model_name,
+    trust_remote_code=True,
+    torch_dtype=t.bfloat16,
 ).cuda()
-model = model.cuda()
 
 
 def solve_hf(method_text: str) -> list[str]:
@@ -50,8 +51,11 @@ def solve_hf(method_text: str) -> list[str]:
             },
         ]
 
-        prompt = tokenizer.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True
+        prompt = (
+            tokenizer.apply_chat_template(
+                messages, tokenize=False, add_generation_prompt=True
+            )
+            + "METHOD_NAME = "
         )
         inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
 
@@ -64,9 +68,10 @@ def solve_hf(method_text: str) -> list[str]:
                 pad_token_id=tokenizer.eos_token_id,
             )
 
-        predicted_name = tokenizer.decode(outputs[0], skip_special_tokens=True)
-        predicted_name = predicted_name.split("\n")[-1].strip()
+        predicted_name = tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
+        predicted_name = predicted_name.split("\n")[-1].split("=")[-1].strip("\"'`. ")
         print(predicted_name)
+        print()
         return predicted_name.split("_")
     except Exception as e:
         print(f"Error occurred: {e}")
