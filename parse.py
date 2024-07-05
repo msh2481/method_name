@@ -22,8 +22,7 @@ def parse_method(file_content, method_name):
 
     for indent, line in indented_lines[method_start + 1 :]:
         if indent > method_indent:
-            # Remove base indentation
-            stripped_line = line[method_indent * 4 :]
+            stripped_line = line[(method_indent + 1) * 4 :]
             method_body.append(stripped_line)
         else:
             break
