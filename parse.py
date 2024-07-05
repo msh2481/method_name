@@ -19,7 +19,12 @@ def parse_method(file_content):
             break
 
     if method_start is None:
-        return None
+        for i, (_, line) in enumerate(indented_lines):
+            if "METHOD_NAME" in line:
+                method_start = i
+                break
+    
+    assert method_start is not None
 
     method_body = []
     method_indent = indented_lines[method_start][0]
