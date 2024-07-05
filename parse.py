@@ -1,4 +1,4 @@
-def parse_method(file_content, method_name):
+def parse_method(file_content, method_name="METHOD_NAME"):
 
     '''
     Parses the target function
