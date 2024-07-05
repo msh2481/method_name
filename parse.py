@@ -1,4 +1,4 @@
-def parse_method(file_content, method_name="def METHOD_NAME"):
+def parse_method(file_content):
     """
     Parses the target function
     """
@@ -14,7 +14,7 @@ def parse_method(file_content, method_name="def METHOD_NAME"):
 
     method_start = None
     for i, (_, line) in enumerate(indented_lines):
-        if method_name in line:
+        if "def METHOD_NAME" in line or "def  METHOD_NAME" in line:
             method_start = i
             break
 
