@@ -82,7 +82,7 @@ def solve_fim(method_text: str) -> list[str]:
 
 
 def solve_dummy(method_text: str) -> list[str]:
-    return ["test", "get", "set", "to"]
+    return ["test", "get"]
 
 
 def solve_decoder(method_text: str) -> list[str]:
@@ -131,9 +131,10 @@ def make_submission(input_name: str, output_name: str):
     ground_truth = []
     predictions = []
     try:
-        ground_truth = [x.split() for x in df["label"].tolist()]
+        ground_truth = [str(x).split() for x in df["label"].tolist()]
         df.drop(columns=["label"], inplace=True)
-    except:
+    except Exception as e:
+        print(e)
         print("Running in test mode, no labels")
     codes = df["code"].tolist()
     labels = []
@@ -144,10 +145,10 @@ def make_submission(input_name: str, output_name: str):
             labels.append(" ".join(p))
     df["label"] = labels
 
-    df.to_csv(output_name, index=False)
+    df.drop(columns=["code"]).to_csv(output_name, index=False)
     if ground_truth:
         results = calc_metrics(predictions, ground_truth)
         print(json.dumps(results, indent=4))
 
 
-make_submission("data/test_methods.csv", "submission.csv")
+make_submission("data/train.csv", "submission.csv")
