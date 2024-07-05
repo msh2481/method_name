@@ -26,7 +26,7 @@ def calculate_metric(df, labels_words, doc_col, label_col):
     # TODO change iterrow - it is very slow
     for _, row in df.iterrows():
         doc_words = row[doc_col].split()
-        label_words = row[label_col]
+        label_words = row[label_col].split()
 
         doc_word_counts = Counter(doc_words)
         label_word_counts = Counter(label_words)
@@ -57,5 +57,5 @@ df = pd.read_csv(dataset_file)
 # #if __name__=="main":
 #     labels_words =
 
-df['metric'] = calculate_metric(df, 'body', 'label')
+df['freq_metric'] = calculate_metric(df, labels_words, 'body', 'label')
 # print(df)
